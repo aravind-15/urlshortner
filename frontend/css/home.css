@@ -17,3 +17,10 @@ input{
 h3{
     text-align: center;
 }
+td{
+   
+    padding:6px 10px;
+}
+th{
+    text-align: center;
+}
