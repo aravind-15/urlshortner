@@ -6,19 +6,26 @@ var users=require("./backend/library/users");
 //middle ware
 app.use(express.static('frontend'));
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 dbconnect.connect((mssg)=>{
     console.log(mssg);
 });
 app.get("/",(req,res)=>{
-    res.send("helllo");
+    res.sendFile(__dirname+"/frontend/html/home.html");
 })
 
-app.get("/api/users",(req,res)=>{
+app.get("/api/users",(req,res)=>{   
      users.getallusers((err,data)=>{
+         if(err)
+         console.log("error");
          res.json(data);
      })
 })
+app.post("/",(req,res)=>{
+    console.log(req.body);
+      res.redirect("/");
+ })
 app.get("/api/users/:id",(req,res)=>{
            users.getuser(req.params.id,(err,data)=>{
                 if(err){
@@ -29,12 +36,14 @@ app.get("/api/users/:id",(req,res)=>{
            })  
 })
 app.post('/api/users/create',(req,res)=>{
+    console.log(req.body);
        users.createuser(req.body,(err,data)=>{
               if(err)
               console.log("FAILED TO ADD USER"+err);
               else
               console.log("USER ADDED"+JSON.stringify(data));
        })
+       res.redirect("/");
 })
 
 
