@@ -1,4 +1,32 @@
 $(function(){
+    $("#submit").on("click",()=>{
+        var jsondata={
+            id:$("#_id").val(),
+            name:$("#name").val(),
+            age:$("#age").val(),
+            mobile:$("#mobile").val()
+          }
+          $.ajax({
+              type:"post",
+              url:"/api/users/create",
+              data: jsondata,
+              success: function(){
+                 $("h5").html("SUCCESSFULLY ADDED!!!").hide().fadeIn("slow");
+                 setTimeout(() => {
+                    location.reload();
+                 }, 2000);
+                     
+              } ,
+              error:(err)=>{
+                $("h5").html("FAILED TO ADD!!!").hide().fadeIn(slow);
+                setTimeout(() => {
+                   location.reload();
+                }, 2000);
+              }
+          })
+    })
+  
+   
     $.ajax({
         type:"get",
         url:"/api/users",
@@ -9,7 +37,7 @@ $(function(){
             console.log("ERROR");
         }
     })
-})
+
 
 
 function display(data){
@@ -20,3 +48,5 @@ function display(data){
      txt+="</table>";
      $("#table").html(txt);
 }
+
+})
