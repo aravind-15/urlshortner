@@ -1,0 +1,16 @@
+.todo{
+    background-color: rgb(240, 211, 200);
+    padding: 5px 5px;
+    float:down;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+.btnc,.btnr
+{ border-radius: 15px;
+  margin-left:10px;}
+
+.btnr{ background-color: rgb(240, 104, 122);
+       color: white;
+       font-weight: 100;
+      }

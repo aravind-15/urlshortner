@@ -1,53 +1,45 @@
-var express=require('express');
-var app=express();
-var dbconnect=require("./backend/dbconnect");
-var config =require("./backend/library/config");
-var users=require("./backend/library/users");
-//middle ware
-app.use(express.static('frontend'));
+var express = require('express');
+var app = express();
+var mongoose= require('mongoose');
+//const bodyParser = require("body-parser");
+var path = require('path');
+var apis= require('./backend/api/allapiroutes.js');
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     next();
+// });
 
-dbconnect.connect((mssg)=>{
-    console.log(mssg);
+//DataBase Connection
+var Connection_String="mongodb+srv://nikhil_mohan:uDiD2RTJNQMh3ghL@cluster0.ooac4.mongodb.net/Courses?retryWrites=true&w=majority";
+var options={useUnifiedTopology: true, useNewUrlParser: true };
+mongoose.connect(Connection_String,options,function cb(){
+    console.log(Connection_String);
 });
-app.get("/",(req,res)=>{
-    res.sendFile(__dirname+"/frontend/html/home.html");
-})
+mongoose.connection.on('connected', function()
+{console.log("Database Connected");})
 
-app.get("/api/users",(req,res)=>{   
-     users.getallusers((err,data)=>{
-         if(err)
-         console.log("error");
-         res.json(data);
-     })
-})
-app.post("/",(req,res)=>{
-    console.log(req.body);
-      res.redirect("/");
+app.get('/su/:id', function(req, res){
+    res.sendFile(__dirname+ '/frontend/html/su.html'); 
  })
-app.get("/api/users/:id",(req,res)=>{
-           users.getuser(req.params.id,(err,data)=>{
-                if(err){
-                    console.log("FAILED TO FIND USER");
-                }
-                else
-                res.json(data);
-           })  
-})
-app.post('/api/users/create',(req,res)=>{
-    console.log(req.body);
-       users.createuser(req.body,(err,data)=>{
-              if(err)
-              console.log("FAILED TO ADD USER"+err);
-              else
-              console.log("USER ADDED"+JSON.stringify(data));
-       })
-       res.redirect("/");
+app.get('/', function(req, res){
+   res.sendFile(__dirname+ '/frontend/html/resume.html'); 
 })
 
+app.use(express.static(__dirname+'/frontend'));
+app.use('/api',apis);
 
-////////////////////////////////////////////////////////////////////////////////////////////
-app.listen(config.port,()=>{
-    console.log("SERVER LISTENING ON PORT"+config.port);
+app.get('/:page', function(req, res){
+    var ext = path.extname(req.params.page);
+    // console.log(ext);
+    if(ext=="")
+    res.sendFile(__dirname+ '/frontend/html/'+ req.params.page+".html");
+    //else  res.sendFile(__dirname+ '/frontend/'+ req.params.page);
 })
+
+var port= process.env.PORT  || 3000;
+app.listen(port,function cb()
+{console.log("http://localhost:"+port)
+});
