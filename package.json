@@ -1,21 +1,8 @@
 {
   "name": "urlshortner",
   "version": "1.0.0",
+  "description": "",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/andedheerajreddy/web.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/andedheerajreddy/web/issues"
-  },
-  "homepage": "https://github.com/andedheerajreddy/web#readme",
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.13.7",
@@ -24,5 +11,18 @@
     "shortid": "^2.2.16"
   },
   "devDependencies": {},
-  "description": ""
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aravind-15/urlshortner.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aravind-15/urlshortner/issues"
+  },
+  "homepage": "https://github.com/aravind-15/urlshortner#readme"
 }
